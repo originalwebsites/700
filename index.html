@@ -33,7 +33,7 @@ button { padding:8px 20px; margin:0 10px; font-size:15px; }
 </div>
 
 <div class="explanation">
-入力された内容は採点されると即時に製作者に送信されます。<br>
+入力された内容は採点されると即時に製作者に送信されます。また、数字、文字、記号は全て半角で打つこと。<br>
 答える値が複数ある場合（例:範囲を答える問題、最大値最小値、解が2つある問題など）は問題文で聞かれている順に「,」で区切って答えてください。
 </div>
 
@@ -89,14 +89,14 @@ const GAS_URL = "https://script.google.com/macros/s/AKfycbwB3YoXRdlNaHM8LZBCimIn
 
 const answers = {
   "q1_1": { value:"π/4", points:5 },
-  "q1_2": { value:"12", points:5 },
+  "q1_2": { value:"10946", points:5 },
   "q1_3": { value:"8/7", points:5 },
   "q1_4": { value:"0", points:5 },
   "q1_5": { value:"28,77", points:5 },
-  "q2_1": { value:"21", points:5 },
-  "q2_2": { value:"22", points:10 },
+  "q2_1": { value:"8/3", points:5 },
+  "q2_2": { value:"3", points:10 },
   "q3":   { value:"√5", points:15 },
-  "q4":   { value:"500/3,4000/3", points:15 },
+  "q4":   { value:"4000/3,500/3", points:15 },
   "q5_1": { value:"700n", points:8 },
   "q5_2": { value:"700n+65", points:7 },
   "q6":   { value:"|sv-tu|^n", points:15 }
