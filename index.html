@@ -1,84 +1,60 @@
-<!DOCTYPE html>
-<html lang="ja">
+<!DOCTYPE html><html lang="ja">
 <head>
 <meta charset="UTF-8">
-<title>数学 小テスト</title>
+<title>下剋上数学</title>
 <style>
 body { font-family:"Yu Mincho",serif; background:#e9ecef; margin:0; padding:30px 0; }
 .paper { width:800px; margin:auto; background:#fff; padding:40px 50px; box-shadow:0 0 10px rgba(0,0,0,0.15); }
 h1 { text-align:center; letter-spacing:4px; margin-bottom:30px; }
 .info { display:flex; justify-content:space-between; margin-bottom:25px; }
-.info div { width:45%; border-bottom:1px solid #000; padding-bottom:5px; }
+.info div { width:45%; }
+.name-input { border:none; border-bottom:2px solid #000; width:200px; font-size:18px; padding:4px; }
 .section { margin-top:25px; }
 .section-title { font-weight:bold; margin-bottom:10px; }
 .question { margin:10px 0; display:flex; align-items:center; }
 .label { width:80px; }
-input { border:none; border-bottom:2px solid #000; width:220px; font-size:18px; padding:4px; text-align:center; }
+input.answer { border:none; border-bottom:2px solid #000; width:220px; font-size:18px; padding:4px; text-align:center; }
 .result { margin-left:15px; font-weight:bold; font-size:18px; }
 .buttons { text-align:center; margin-top:30px; }
 button { padding:8px 20px; margin:0 10px; font-size:15px; }
 #score { text-align:right; font-size:20px; margin-top:20px; font-weight:bold; }
 </style>
-</head>
-
-<body>
+</head><body>
 <div class="paper">
-<h1>数 学 小 テ ス ト</h1>
-
-<div class="info">
-<div>氏名：</div>
+<h1>下 剋 上 数 学</h1><div class="info">
+<div>氏名：<input id="studentName" class="name-input"></div>
 <div>得点：</div>
-</div>
-
-<div class="section">
+</div><div class="section">
 <div class="section-title">大問1</div>
-<div class="question"><div class="label">(1)</div><input id="q1_1"><span class="result" id="r1_1"></span></div>
-<div class="question"><div class="label">(2)</div><input id="q1_2"><span class="result" id="r1_2"></span></div>
-<div class="question"><div class="label">(3)</div><input id="q1_3"><span class="result" id="r1_3"></span></div>
-<div class="question"><div class="label">(4)</div><input id="q1_4"><span class="result" id="r1_4"></span></div>
-<div class="question"><div class="label">(5)</div><input id="q1_5"><span class="result" id="r1_5"></span></div>
-</div>
-
-<div class="section">
+<div class="question"><div class="label">(1)</div><input class="answer" id="q1_1"><span class="result" id="r1_1"></span></div>
+<div class="question"><div class="label">(2)</div><input class="answer" id="q1_2"><span class="result" id="r1_2"></span></div>
+<div class="question"><div class="label">(3)</div><input class="answer" id="q1_3"><span class="result" id="r1_3"></span></div>
+<div class="question"><div class="label">(4)</div><input class="answer" id="q1_4"><span class="result" id="r1_4"></span></div>
+<div class="question"><div class="label">(5)</div><input class="answer" id="q1_5"><span class="result" id="r1_5"></span></div>
+</div><div class="section">
 <div class="section-title">大問2</div>
-<div class="question"><div class="label">(1)</div><input id="q2_1"><span class="result" id="r2_1"></span></div>
-<div class="question"><div class="label">(2)</div><input id="q2_2"><span class="result" id="r2_2"></span></div>
-</div>
-
-<div class="section">
+<div class="question"><div class="label">(1)</div><input class="answer" id="q2_1"><span class="result" id="r2_1"></span></div>
+<div class="question"><div class="label">(2)</div><input class="answer" id="q2_2"><span class="result" id="r2_2"></span></div>
+</div><div class="section">
 <div class="section-title">大問3</div>
-<div class="question"><div class="label">解答</div><input id="q3"><span class="result" id="r3"></span></div>
-</div>
-
-<div class="section">
+<div class="question"><div class="label">解答</div><input class="answer" id="q3"><span class="result" id="r3"></span></div>
+</div><div class="section">
 <div class="section-title">大問4</div>
-<div class="question"><div class="label">解答</div><input id="q4"><span class="result" id="r4"></span></div>
-</div>
-
-<div class="section">
+<div class="question"><div class="label">解答</div><input class="answer" id="q4"><span class="result" id="r4"></span></div>
+</div><div class="section">
 <div class="section-title">大問5</div>
-<div class="question"><div class="label">(1)</div><input id="q5_1"><span class="result" id="r5_1"></span></div>
-<div class="question"><div class="label">(2)</div><input id="q5_2"><span class="result" id="r5_2"></span></div>
-</div>
-
-<div class="section">
+<div class="question"><div class="label">(1)</div><input class="answer" id="q5_1"><span class="result" id="r5_1"></span></div>
+<div class="question"><div class="label">(2)</div><input class="answer" id="q5_2"><span class="result" id="r5_2"></span></div>
+</div><div class="section">
 <div class="section-title">大問6</div>
-<div class="question"><div class="label">解答</div><input id="q6"><span class="result" id="r6"></span></div>
-</div>
-
-<div class="buttons">
+<div class="question"><div class="label">解答</div><input class="answer" id="q6"><span class="result" id="r6"></span></div>
+</div><div class="buttons">
 <button onclick="grade()">採点</button>
 <button onclick="resetAll()">リセット</button>
-</div>
-
-<div id="score"></div>
-</div>
-
-<script>
-// ★あなたのApps Script URL（設定済）
+</div><div id="score"></div>
+</div><script>
 const GAS_URL = "https://script.google.com/macros/s/AKfycbwB3YoXRdlNaHM8LZBCimInsxYqWSmAsfh5qijN0gD4ntmvjLLqTRmFzReEV0-evSSn/exec";
 
-// 正解と配点（ここを自由に変更できます）
 const answers = {
 "q1_1": { value:"π/4", points:1 },
 "q1_2": { value:"12", points:1 },
@@ -95,10 +71,7 @@ const answers = {
 };
 
 function normalize(str){
-return (str||"")
-.replace(/[０-９]/g,s=>String.fromCharCode(s.charCodeAt(0)-0xFEE0))
-.replace(/\s+/g,"")
-.trim();
+return (str||"").replace(/[０-９]/g,s=>String.fromCharCode(s.charCodeAt(0)-0xFEE0)).replace(/\s+/g,"").trim();
 }
 
 function canonical(expr){
@@ -131,7 +104,11 @@ sendToSheet(score,total);
 }
 
 function sendToSheet(score,total){
-const data={timestamp:new Date().toLocaleString(),score,total,answers:{}};
+const data={
+name:document.getElementById("studentName").value,
+timestamp:new Date().toLocaleString(),
+score,total,answers:{}
+};
 for(const id in answers){
 data.answers[id]=document.getElementById(id).value;
 }
@@ -143,6 +120,5 @@ document.querySelectorAll("input").forEach(i=>i.value="");
 document.querySelectorAll(".result").forEach(r=>r.textContent="");
 document.getElementById("score").textContent="";
 }
-</script>
-</body>
+</script></body>
 </html>
