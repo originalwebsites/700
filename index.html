@@ -33,7 +33,8 @@ button { padding:8px 20px; margin:0 10px; font-size:15px; }
 </div>
 
 <div class="explanation">
-入力された内容は採点されると即時に製作者に入力内容が送られる。答える値が複数ある場合（例:範囲を答える問題、最大値最小値、解が2つある問題など）は問題文で聞かれている順に「,」で区切って答えてください。
+入力された内容は採点されると即時に製作者に送信されます。<br>
+答える値が複数ある場合（例:範囲、最大最小値、解が2つある問題など）は問題文で聞かれている順に「,」で区切って答えてください。
 </div>
 
 <!-- ===== 問題構成 ===== -->
@@ -106,24 +107,15 @@ function normalize(str){
                  .replace(/\s+/g,"").trim();
 }
 
-// 交換法則・絶対値内の符号を同一視
+// 絶対値内の項の順序と符号を無視して同一視
 function canonical(expr){
   expr = normalize(expr);
 
-  // 絶対値内の処理
   expr = expr.replace(/\|([^\|]+)\|/g,(match,p1)=>{
-    // 2項ずつに分けて + - 無視してアルファベット順でソート
-    let terms = p1.split(/([+\-])/);
-    let items = [];
-    for(let i=0;i<terms.length;i++){
-      if(terms[i]==="+"||terms[i]==="-") continue;
-      let op = (i>0) ? terms[i-1] : "";
-      items.push(op + terms[i]);
-    }
-    items.sort((a,b)=>{
-      return a.replace(/[^a-zA-Z]/g,'').localeCompare(b.replace(/[^a-zA-Z]/g,''));
-    });
-    return '|' + items.join('') + '|';
+    // 項を符号無視で取り出してソート
+    let terms = p1.split(/[-+]/).map(s=>s.trim()).filter(s=>s!=="");
+    terms.sort(); // アルファベット順
+    return '|' + terms.join('-') + '|'; // 絶対値再構築
   });
 
   // 絶対値外の + と * の交換法則
