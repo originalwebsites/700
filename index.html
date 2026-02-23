@@ -1,40 +1,81 @@
 <!DOCTYPE html><html lang="ja">
 <head>
   <meta charset="UTF-8">
-  <title>採点システム</title>
+  <title>数学 小テスト</title>
   <style>
-    body { font-family: sans-serif; margin: 40px; background: #f7f7f7; }
-    h1 { margin-bottom: 10px; }
-    .question { background: #fff; padding: 15px; margin-bottom: 10px; border-radius: 8px; }
-    input { padding: 6px; width: 140px; }
-    button { padding: 8px 16px; margin-top: 10px; }
-    .result { font-weight: bold; margin-left: 10px; }
-    #score { font-size: 20px; margin-top: 20px; }
+    body { font-family: "Yu Mincho", serif; background:#e9ecef; margin:0; padding:30px 0; }
+    .paper { width:800px; margin:auto; background:#fff; padding:40px 50px; box-shadow:0 0 10px rgba(0,0,0,0.15); }
+    h1 { text-align:center; letter-spacing:4px; margin-bottom:30px; }
+    .info { display:flex; justify-content:space-between; margin-bottom:25px; }
+    .info div { width:45%; border-bottom:1px solid #000; padding-bottom:5px; }
+    .section { margin-top:25px; }
+    .section-title { font-weight:bold; margin-bottom:10px; }
+    .question { margin:10px 0; display:flex; align-items:center; }
+    .label { width:80px; }
+    input { border:none; border-bottom:2px solid #000; width:200px; font-size:18px; padding:4px; text-align:center; }
+    .result { margin-left:15px; font-weight:bold; }
+    .buttons { text-align:center; margin-top:30px; }
+    button { padding:8px 20px; margin:0 10px; }
+    #score { text-align:right; font-size:20px; margin-top:20px; font-weight:bold; }
+    @media print { button { display:none; } body{background:#fff;} .paper{box-shadow:none;} }
   </style>
 </head>
-<body><h1>解答入力</h1>
-<p>答えの数値を入力してください。</p><div id="questions"></div><button onclick="grade()">採点する</button> <button onclick="resetAll()">リセット</button>
+<body>
+<div class="paper">
+  <h1>下剋上数学</h1>  <div class="info">
+    <div>氏名：</div>
+    <div>得点：</div>
+  </div>  <!-- ===== 問題構成 ===== -->  <div class="section">
+    <div class="section-title">大問1</div>
+    <div class="question"><div class="label">(1)</div><input id="q1_1"><span class="result" id="r1_1"></span></div>
+    <div class="question"><div class="label">(2)</div><input id="q1_2"><span class="result" id="r1_2"></span></div>
+    <div class="question"><div class="label">(3)</div><input id="q1_3"><span class="result" id="r1_3"></span></div>
+    <div class="question"><div class="label">(4)</div><input id="q1_4"><span class="result" id="r1_4"></span></div>
+    <div class="question"><div class="label">(5)</div><input id="q1_5"><span class="result" id="r1_5"></span></div>
+  </div>  <div class="section">
+    <div class="section-title">大問2</div>
+    <div class="question"><div class="label">(1)</div><input id="q2_1"><span class="result" id="r2_1"></span></div>
+    <div class="question"><div class="label">(2)</div><input id="q2_2"><span class="result" id="r2_2"></span></div>
+  </div>  <div class="section">
+    <div class="section-title">大問3</div>
+    <div class="question"><div class="label">解答</div><input id="q3"><span class="result" id="r3"></span></div>
+  </div>  <div class="section">
+    <div class="section-title">大問4</div>
+    <div class="question"><div class="label">解答</div><input id="q4"><span class="result" id="r4"></span></div>
+  </div>  <div class="section">
+    <div class="section-title">大問5</div>
+    <div class="question"><div class="label">(1)</div><input id="q5_1"><span class="result" id="r5_1"></span></div>
+    <div class="question"><div class="label">(2)</div><input id="q5_2"><span class="result" id="r5_2"></span></div>
+  </div>  <div class="section">
+    <div class="section-title">大問6</div>
+    <div class="question"><div class="label">解答</div><input id="q6"><span class="result" id="r6"></span></div>
+  </div>  <div class="buttons">
+    <button onclick="grade()">採点</button>
+    <button onclick="resetAll()">リセット</button>
+  </div>  <div id="score"></div>
+</div><script>
+  // ===== ここに正解を入力してください（あとから編集） =====
+  // 形式："入力欄ID": 正解数値
+  // 例： q1_1 が 700、q2_2 が 765 の場合
+  // "q1_1":700,
+  // "q2_2":765,
 
-<div id="score"></div><script>
-  // ====== 正解をここに入力（数値そのもの） ======
-  // 例：第1問 700、第2問 765
-  const answers = [700, 765,65];
-  // 問題を増やすときは [700,765,1400,...] のように追加
-  // ============================================
+  const answers = {
+  "q1_1":4/π,
+  "q1_2":1,
+    "q1_3":8/7,
+    "q1_4":1,
+    "q1_5":28,77,
+  };
+  // ======================================================
 
-  const QUESTION_COUNT = answers.length;
-  const container = document.getElementById("questions");
+  const allInputs = document.querySelectorAll("input");
 
-  // 問題欄を生成
-  for (let i = 0; i < QUESTION_COUNT; i++) {
-    const div = document.createElement("div");
-    div.className = "question";
-    div.innerHTML = `
-      <label>問題 ${i+1}：</label>
-      <input type="text" id="q${i}" placeholder="数値を入力">
-      <span class="result" id="r${i}"></span>
-    `;
-    container.appendChild(div);
+  function normalizeNumber(str) {
+    return str
+      .replace(/[０-９]/g, s => String.fromCharCode(s.charCodeAt(0) - 0xFEE0))
+      .replace(/－/g, '-')
+      .trim();
   }
 
   function isInteger(value) {
@@ -43,37 +84,29 @@
 
   function grade() {
     let score = 0;
+    let total = 0;
 
-    for (let i = 0; i < QUESTION_COUNT; i++) {
-      const input = document.getElementById(`q${i}`).value.trim();
-      const result = document.getElementById(`r${i}`);
+    for (const id in answers) {
+      total++;
+      const inputEl = document.getElementById(id);
+      const resultEl = document.getElementById("r" + id.slice(1));
 
-      if (!isInteger(input)) {
-        result.textContent = "×（整数で入力）";
-        result.style.color = "red";
-        continue;
-      }
+      let val = normalizeNumber(inputEl.value);
 
-      const value = parseInt(input, 10);
-
-      if (value === answers[i]) {
-        result.textContent = "○";
-        result.style.color = "green";
+      if (isInteger(val) && parseInt(val,10) === answers[id]) {
+        resultEl.textContent = "○";
         score++;
       } else {
-        result.textContent = "×";
-        result.style.color = "red";
+        resultEl.textContent = "×";
       }
     }
 
-    document.getElementById("score").textContent = `得点：${score} / ${QUESTION_COUNT}`;
+    document.getElementById("score").textContent = `得点：${score} / ${total}`;
   }
 
   function resetAll() {
-    for (let i = 0; i < QUESTION_COUNT; i++) {
-      document.getElementById(`q${i}`).value = "";
-      document.getElementById(`r${i}`).textContent = "";
-    }
+    allInputs.forEach(i => i.value = "");
+    document.querySelectorAll(".result").forEach(r => r.textContent = "");
     document.getElementById("score").textContent = "";
   }
 </script></body>
