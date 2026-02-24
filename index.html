@@ -10,16 +10,21 @@ body { font-family:"Yu Mincho", serif; background:#e9ecef; margin:0; padding:30p
 h1 { text-align:center; letter-spacing:4px; margin-bottom:20px; }
 .info { display:flex; justify-content:space-between; margin-bottom:5px; }
 .name-input { border:none; border-bottom:2px solid #000; width:200px; font-size:18px; padding:4px; }
-.section { margin-top:20px; }
+.section { margin-top:25px; }
 .section-title { font-weight:bold; margin-bottom:10px; }
 .question { margin:10px 0; display:flex; align-items:center; }
 .label { width:120px; }
-input.answer, input.range-answer { border:none; border-bottom:2px solid #000; width:200px; font-size:18px; padding:4px; text-align:center; }
+input.answer, input.range-answer {
+  border:none; border-bottom:2px solid #000;
+  width:200px; font-size:18px; padding:4px; text-align:center;
+}
 .result { margin-left:15px; font-weight:bold; font-size:18px; }
-.author { margin-left:auto; font-size:14px; color:#444; }
-#score { text-align:right; font-size:20px; font-weight:bold; }
 .buttons { text-align:center; margin-top:30px; }
 button { padding:8px 20px; font-size:15px; }
+#score { text-align:right; font-size:20px; font-weight:bold; }
+.explanation { font-size:14px; margin-bottom:15px; }
+.author { margin-left:auto; font-size:14px; color:#444; }
+.section-head { display:flex; justify-content:space-between; }
 </style>
 </head>
 
@@ -28,113 +33,117 @@ button { padding:8px 20px; font-size:15px; }
 <h1>下 剋 上 数 学</h1>
 
 <div class="info">
-  <div>氏名：<input id="studentName" class="name-input"></div>
-  <div id="score">得点：</div>
+<div>氏名：<input id="studentName" class="name-input"></div>
+<div id="score">得点：</div>
 </div>
 
-<!-- ===== 大問1 ===== -->
+<div class="explanation">
+数字・文字はすべて半角、単位は不要。
+</div>
+
+<!-- 大問1 -->
 <div class="section">
-<div class="section-title">大問1　各5点</div>
+<div class="section-title">大問1（各5点）</div>
 
-<div class="question"><div class="label">(1)</div>
-<input class="answer" id="q1_1"><span class="result" id="r1_1"></span>
-<span class="author">野田</span></div>
+<div class="question"><div class="label">(1)</div><input class="answer" id="q1_1"><span class="result" id="r1_1"></span></div>
+<div class="question"><div class="label">(2)</div><input class="answer" id="q1_2"><span class="result" id="r1_2"></span></div>
+<div class="question"><div class="label">(3)</div><input class="answer" id="q1_3"><span class="result" id="r1_3"></span></div>
+<div class="question"><div class="label">(4)</div><input class="answer" id="q1_4"><span class="result" id="r1_4"></span></div>
 
-<div class="question"><div class="label">(2)</div>
-<input class="answer" id="q1_2"><span class="result" id="r1_2"></span>
-<span class="author">大黒</span></div>
-
-<div class="question"><div class="label">(3)</div>
-<input class="answer" id="q1_3"><span class="result" id="r1_3"></span>
-<span class="author">水野</span></div>
-
-<div class="question"><div class="label">(4)</div>
-<input class="answer" id="q1_4"><span class="result" id="r1_4"></span>
-<span class="author">水野</span></div>
-
-<div class="question"><div class="label">(5)</div>
-<input class="range-answer" id="q1_5_min">
-<span>≤ S ＜</span>
+<div class="question">
+<input class="range-answer" id="q1_5_min"> ≤ S <
 <input class="range-answer" id="q1_5_max">
 <span class="result" id="r1_5"></span>
-<span class="author">松本</span></div>
+</div>
 </div>
 
-<!-- ===== 大問4（例） ===== -->
+<!-- 他の大問は同様構造なので省略可（追加OK） -->
+
 <div class="section">
-<div class="section-title">大問4　完答15点</div>
-
-<div class="question"><div class="label">最大値</div>
-<input class="range-answer" id="q4_max"></div>
-
-<div class="question"><div class="label">最小値</div>
-<input class="range-answer" id="q4_min">
-<span class="result" id="r4"></span>
-<span class="author">松本</span></div>
+<div class="section-title">感想</div>
+<input id="comment" class="answer">
 </div>
 
 <div class="buttons">
 <button onclick="grade()">採点</button>
 </div>
 
+</div>
+
 <script>
+/* あなたのGASのURL */
 const GAS_URL = "https://script.google.com/macros/s/AKfycbwB3YoXRdlNaHM8LZBCimInsxYqWSmAsfh5qijN0gD4ntmvjLLqTRmFzReEV0-evSSn/exec";
 
+/* 正答 */
 const answers = {
-  q1_1:{value:"3π/4",points:5},
-  q1_2:{value:"10946",points:5},
-  q1_3:{value:"8/7",points:5},
-  q1_4:{value:"0",points:5},
-  q1_5:{value:["28","77"],points:5},
-  q4:{value:["2000/3","500/3"],points:15}
+  "q1_1": { value:"3π/4", points:5 },
+  "q1_2": { value:"10946", points:5 },
+  "q1_3": { value:"8/7", points:5 },
+  "q1_4": { value:"0", points:5 },
+  "q1_5": { value:["28","77"], points:5 }
 };
 
-function normalize(s){
- return (s||"").replace(/\s+/g,"").trim();
+function normalize(str){
+  return (str||"")
+    .replace(/[０-９]/g,s=>String.fromCharCode(s.charCodeAt(0)-0xFEE0))
+    .replace(/\s+/g,"")
+    .trim();
+}
+
+function canonical(expr){
+  expr = normalize(expr);
+  if(expr.includes('+')){
+    return expr.split('+').map(s=>s.trim()).sort().join('+');
+  }
+  return expr;
 }
 
 function grade(){
- let score=0,total=0;
+  let sum = 0;
+  let total = 0;
 
- for(const id in answers){
-  total+=answers[id].points;
+  for(const id in answers){
+    total += answers[id].points;
 
-  if(id==="q1_5"){
-    const min=normalize(q1_5_min.value);
-    const max=normalize(q1_5_max.value);
-    if(min===answers[id].value[0]&&max===answers[id].value[1]){
-      r1_5.textContent="○"; score+=5;
-    }else r1_5.textContent="×";
-    continue;
+    if(id==="q1_5"){
+      const min = normalize(document.getElementById("q1_5_min").value);
+      const max = normalize(document.getElementById("q1_5_max").value);
+
+      if(min===answers[id].value[0] && max===answers[id].value[1]){
+        document.getElementById("r1_5").textContent="○";
+        sum += answers[id].points;
+      }else{
+        document.getElementById("r1_5").textContent="×";
+      }
+      continue;
+    }
+
+    const input = document.getElementById(id).value;
+    if(canonical(input) === canonical(answers[id].value)){
+      document.getElementById("r"+id.slice(1)).textContent="○";
+      sum += answers[id].points;
+    }else{
+      document.getElementById("r"+id.slice(1)).textContent="×";
+    }
   }
 
-  if(id==="q4"){
-    const max=normalize(q4_max.value);
-    const min=normalize(q4_min.value);
-    if(max===answers[id].value[0]&&min===answers[id].value[1]){
-      r4.textContent="○"; score+=15;
-    }else r4.textContent="×";
-    continue;
-  }
- }
-
- document.getElementById("score").textContent=`得点：${score} / ${total}`;
- sendToSheet(score,total);
+  document.getElementById("score").textContent = `得点：${sum} / ${total}`;
+  sendToSheet(sum,total);
 }
 
+/* ★ここが最重要：FormData送信（GAS対応） */
 function sendToSheet(score,total){
- const data={
-  name:document.getElementById("studentName").value,
-  timestamp:new Date().toLocaleString(),
-  score:score,
-  total:total
- };
+  const fd = new FormData();
+  fd.append("name", document.getElementById("studentName").value);
+  fd.append("comment", document.getElementById("comment").value);
+  fd.append("score", score);
+  fd.append("total", total);
+  fd.append("time", new Date().toLocaleString());
 
- fetch(GAS_URL,{
-  method:"POST",
-  headers:{"Content-Type":"application/json"},
-  body:JSON.stringify(data)
- });
+  fetch(GAS_URL,{
+    method:"POST",
+    body:fd
+  });
 }
 </script>
 
