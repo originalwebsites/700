@@ -181,21 +181,38 @@ send(score,total);
 }
 
 function send(score,total){
-const fd=new FormData();
 
-fd.append("studentName",studentName.value);
-fd.append("comment",comment.value);
-fd.append("score",score);
-fd.append("total",total);
-fd.append("time",new Date().toLocaleString());
+  const fd = new FormData();
 
-["q1_1","q1_2","q1_3","q1_4","q1_5_min","q1_5_max",
- "q2_1","q2_2","q3","q4_max","q4_min",
- "q5_1","q5_2","q6"].forEach(id=>{
-fd.append(id,document.getElementById(id).value);
-});
+  // 基本情報
+  fd.append("name", studentName.value);
+  fd.append("time", new Date().toLocaleString());
+  fd.append("score", score);
+  fd.append("total", total);
+  fd.append("comment", comment.value);
 
-fetch(GAS_URL,{method:"POST",body:fd});
+  // ▼答案を全部送信（これが今回追加）
+  fd.append("q1_1", q1_1.value);
+  fd.append("q1_2", q1_2.value);
+  fd.append("q1_3", q1_3.value);
+  fd.append("q1_4", q1_4.value);
+  fd.append("q1_5_min", q1_5_min.value);
+  fd.append("q1_5_max", q1_5_max.value);
+
+  fd.append("q2_1", q2_1.value);
+  fd.append("q2_2", q2_2.value);
+
+  fd.append("q3", q3.value);
+
+  fd.append("q4_max", q4_max.value);
+  fd.append("q4_min", q4_min.value);
+
+  fd.append("q5_1", q5_1.value);
+  fd.append("q5_2", q5_2.value);
+
+  fd.append("q6", q6.value);
+
+  fetch(GAS_URL, { method:"POST", body:fd });
 }
 </script>
 </body>
