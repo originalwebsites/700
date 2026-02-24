@@ -145,8 +145,39 @@ q5_2:{value:"700n+65",points:7},
 q6:{value:"|sv-tu|^n",points:15}
 };
 
-function normalize(s){return (s||"").replace(/\s+/g,"");}
+function normalize(s){
+  return (s||"")
+    .replace(/\s+/g,"")     // 空白削除
+    .replace(/×/g,"*")      // ×→*
+    .replace(/[()]/g,"");   // ()無視
+  }
+  function equalAbsolute(a,b){
+  a = normalize(a);
+  b = normalize(b);
 
+  a = a.replace(/^\|(.+)\|$/,"$1");
+  b = b.replace(/^\|(.+)\|$/,"$1");
+
+  if(a===b) return true;
+
+  const neg = x=>{
+    return x
+      .replace(/\+/g,"@")
+      .replace(/-/g,"+")
+      .replace(/@/g,"-");
+  };
+
+  if(neg(a)===b) return true;
+
+  const swapMul = x=>{
+    return x.replace(/([a-z])([a-z])/gi,"$2$1");
+  };
+
+  if(swapMul(a)===b) return true;
+  if(neg(swapMul(a))===b) return true;
+
+  return false;
+  }
 function grade(){
 let score=0,total=0;
 
@@ -169,11 +200,18 @@ r4.textContent="○"; score+=15;
 continue;
 }
 
-const input=normalize(document.getElementById(id).value);
+const input=document.getElementById(id).value;
 const res=document.getElementById("r"+id.slice(1));
 
-if(input===answers[id].value){res.textContent="○";score+=answers[id].points;}
-else res.textContent="×";
+if(id==="q6"){
+  if(equalAbsolute(input,answers[id].value)){
+    res.textContent="○"; score+=answers[id].points;
+  }else res.textContent="×";
+}else{
+  if(normalize(input)===answers[id].value){
+    res.textContent="○"; score+=answers[id].points;
+  }else res.textContent="×";
+  }
 }
 
 document.getElementById("score").textContent=`得点：${score} / ${total}`;
