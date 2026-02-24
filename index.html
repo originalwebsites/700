@@ -155,11 +155,20 @@ function normalize(s){
   a = normalize(a);
   b = normalize(b);
 
-  a = a.replace(/^\|(.+)\|$/,"$1");
-  b = b.replace(/^\|(.+)\|$/,"$1");
+  // | | を外す（^n も保持）
+  a = a.replace(/^\|(.+)\|(\^.*)?$/,"$1$2");
+  b = b.replace(/^\|(.+)\|(\^.*)?$/,"$1$2");
 
   if(a===b) return true;
 
+  // A-B → B-A に並び替え
+  const swapDiff = x=>{
+    const m = x.match(/^(.+)-(.+?)(\^.*)?$/);
+    if(!m) return x;
+    return m[2]+"-"+m[1]+(m[3]||"");
+  };
+
+  // 全体に -1 を掛ける（符号反転）
   const neg = x=>{
     return x
       .replace(/\+/g,"@")
@@ -167,16 +176,24 @@ function normalize(s){
       .replace(/@/g,"-");
   };
 
-  if(neg(a)===b) return true;
-
+  // 積の順序入替（tu ⇔ ut）
   const swapMul = x=>{
     return x.replace(/([a-z])([a-z])/gi,"$2$1");
   };
 
-  if(swapMul(a)===b) return true;
-  if(neg(swapMul(a))===b) return true;
+  // 数学的に同じ可能性を全部比較
+  const patterns = [
+    a,
+    neg(a),
+    swapMul(a),
+    neg(swapMul(a)),
+    swapDiff(a),
+    neg(swapDiff(a)),
+    swapMul(swapDiff(a)),
+    neg(swapMul(swapDiff(a)))
+  ];
 
-  return false;
+  return patterns.includes(b);
   }
 function grade(){
 let score=0,total=0;
