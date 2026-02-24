@@ -3,12 +3,12 @@
 <head>
 <meta charset="UTF-8">
 <title>下剋上数学</title>
+
 <style>
 body { font-family:"Yu Mincho", serif; background:#e9ecef; margin:0; padding:30px 0; }
 .paper { width:800px; margin:auto; background:#fff; padding:40px 50px; box-shadow:0 0 10px rgba(0,0,0,0.15); }
 h1 { text-align:center; letter-spacing:4px; margin-bottom:20px; }
 .info { display:flex; justify-content:space-between; margin-bottom:5px; }
-.info div { width:45%; }
 .name-input { border:none; border-bottom:2px solid #000; width:200px; font-size:18px; padding:4px; }
 .section { margin-top:20px; }
 .section-title { font-weight:bold; margin-bottom:10px; }
@@ -16,15 +16,10 @@ h1 { text-align:center; letter-spacing:4px; margin-bottom:20px; }
 .label { width:120px; }
 input.answer, input.range-answer { border:none; border-bottom:2px solid #000; width:200px; font-size:18px; padding:4px; text-align:center; }
 .result { margin-left:15px; font-weight:bold; font-size:18px; }
-.buttons { text-align:center; margin-top:30px; }
-button { padding:8px 20px; margin:0 10px; font-size:15px; }
+.author { margin-left:auto; font-size:14px; color:#444; }
 #score { text-align:right; font-size:20px; font-weight:bold; }
-.explanation { font-size:14px; margin-bottom:15px; }
-
-/* 追加：作問者表示 */
-.author { margin-left:auto; font-size:14px; color:#444; letter-spacing:1px; }
-.section-head { display:flex; justify-content:space-between; align-items:flex-end; }
-.section-author { font-size:14px; color:#444; }
+.buttons { text-align:center; margin-top:30px; }
+button { padding:8px 20px; font-size:15px; }
 </style>
 </head>
 
@@ -37,185 +32,111 @@ button { padding:8px 20px; margin:0 10px; font-size:15px; }
   <div id="score">得点：</div>
 </div>
 
-<div class="explanation">
-入力された内容は採点されると即時に製作者に送信されます。<br>
-数字、文字、記号は全て半角で入力し、単位はつけず、数値だけで答えること。<br>
-全て解いてから採点をすること。
-</div>
-
 <!-- ===== 大問1 ===== -->
 <div class="section">
-  <div class="section-title">大問1　各5点</div>
+<div class="section-title">大問1　各5点</div>
 
-  <div class="question">
-    <div class="label">(1)</div>
-    <input class="answer" id="q1_1"><span class="result" id="r1_1"></span>
-    <span class="author">B野田</span>
-  </div>
+<div class="question"><div class="label">(1)</div>
+<input class="answer" id="q1_1"><span class="result" id="r1_1"></span>
+<span class="author">野田</span></div>
 
-  <div class="question">
-    <div class="label">(2)</div>
-    <input class="answer" id="q1_2"><span class="result" id="r1_2"></span>
-    <span class="author">D大黒</span>
-  </div>
+<div class="question"><div class="label">(2)</div>
+<input class="answer" id="q1_2"><span class="result" id="r1_2"></span>
+<span class="author">大黒</span></div>
 
-  <div class="question">
-    <div class="label">(3)</div>
-    <input class="answer" id="q1_3"><span class="result" id="r1_3"></span>
-    <span class="author">C水野</span>
-  </div>
+<div class="question"><div class="label">(3)</div>
+<input class="answer" id="q1_3"><span class="result" id="r1_3"></span>
+<span class="author">水野</span></div>
 
-  <div class="question">
-    <div class="label">(4)</div>
-    <input class="answer" id="q1_4"><span class="result" id="r1_4"></span>
-    <span class="author">C水野</span>
-  </div>
+<div class="question"><div class="label">(4)</div>
+<input class="answer" id="q1_4"><span class="result" id="r1_4"></span>
+<span class="author">水野</span></div>
 
-  <div class="question">
-    <div class="label">(5)</div>
-    <input class="range-answer" id="q1_5_min">
-    <span>≤ S <</span>
-    <input class="range-answer" id="q1_5_max">
-    <span class="result" id="r1_5"></span>
-    <span class="author">A松本</span>
-  </div>
+<div class="question"><div class="label">(5)</div>
+<input class="range-answer" id="q1_5_min">
+<span>≤ S ＜</span>
+<input class="range-answer" id="q1_5_max">
+<span class="result" id="r1_5"></span>
+<span class="author">松本</span></div>
 </div>
 
-<!-- ===== 大問2 ===== -->
+<!-- ===== 大問4（例） ===== -->
 <div class="section">
-  <div class="section-head">
-    <div class="section-title">大問2</div>
-    <div class="section-author">D大黒</div>
-  </div>
-  <div class="question"><div class="label">(1)　8点</div><input class="answer" id="q2_1"><span class="result" id="r2_1"></span></div>
-  <div class="question"><div class="label">(2)　7点</div><input class="answer" id="q2_2"><span class="result" id="r2_2"></span></div>
-</div>
+<div class="section-title">大問4　完答15点</div>
 
-<!-- ===== 大問3 ===== -->
-<div class="section">
-  <div class="section-head">
-    <div class="section-title">大問3</div>
-    <div class="section-author">C野々部</div>
-  </div>
-  <div class="question"><div class="label">15点</div><input class="answer" id="q3"><span class="result" id="r3"></span></div>
-</div>
+<div class="question"><div class="label">最大値</div>
+<input class="range-answer" id="q4_max"></div>
 
-<!-- ===== 大問4 ===== -->
-<div class="section">
-  <div class="section-head">
-    <div class="section-title">大問4　完答15点</div>
-    <div class="section-author">A松本</div>
-  </div>
-  <div class="question"><div class="label">最大値</div><input class="range-answer" id="q4_max"></div>
-  <div class="question"><div class="label">最小値</div><input class="range-answer" id="q4_min"><span class="result" id="r4"></span></div>
-</div>
-
-<!-- ===== 大問5 ===== -->
-<div class="section">
-  <div class="section-head">
-    <div class="section-title">大問5</div>
-    <div class="section-author">B野田</div>
-  </div>
-  <div class="question"><div class="label">(1)　8点</div><input class="answer" id="q5_1"><span class="result" id="r5_1"></span></div>
-  <div class="question"><div class="label">(2)　7点</div><input class="answer" id="q5_2"><span class="result" id="r5_2"></span></div>
-</div>
-
-<!-- ===== 大問6 ===== -->
-<div class="section">
-  <div class="section-head">
-    <div class="section-title">大問6</div>
-    <div class="section-author">C野々部</div>
-  </div>
-  <div class="question"><div class="label">15点</div><input class="answer" id="q6"><span class="result" id="r6"></span></div>
-</div>
-
-<!-- 感想 -->
-<div class="section">
-  <div class="section-title">感想</div>
-  <input id="comment" class="answer" placeholder="テストの感想を書いてください">
+<div class="question"><div class="label">最小値</div>
+<input class="range-answer" id="q4_min">
+<span class="result" id="r4"></span>
+<span class="author">松本</span></div>
 </div>
 
 <div class="buttons">
-  <button onclick="grade()">採点</button>
+<button onclick="grade()">採点</button>
 </div>
 
 <script>
 const GAS_URL = "https://script.google.com/macros/s/AKfycbwB3YoXRdlNaHM8LZBCimInsxYqWSmAsfh5qijN0gD4ntmvjLLqTRmFzReEV0-evSSn/exec";
 
 const answers = {
-  "q1_1": { value:"3π/4", points:5 },
-  "q1_2": { value:"10946", points:5 },
-  "q1_3": { value:"8/7", points:5 },
-  "q1_4": { value:"0", points:5 },
-  "q1_5": { value:["28","77"], points:5 },
-  "q2_1": { value:"8/3", points:8 },
-  "q2_2": { value:"3", points:7 },
-  "q3":   { value:"√5", points:15 },
-  "q4":   { value:["2000/3","500/3"], points:15 },
-  "q5_1": { value:"700n", points:8 },
-  "q5_2": { value:"700n+65", points:7 },
-  "q6":   { value:"|sv-tu|^n", points:15 }
+  q1_1:{value:"3π/4",points:5},
+  q1_2:{value:"10946",points:5},
+  q1_3:{value:"8/7",points:5},
+  q1_4:{value:"0",points:5},
+  q1_5:{value:["28","77"],points:5},
+  q4:{value:["2000/3","500/3"],points:15}
 };
 
-function normalize(str){
-  return (str||"").replace(/[０-９]/g,s=>String.fromCharCode(s.charCodeAt(0)-0xFEE0))
-                 .replace(/\s+/g,"").trim();
-}
-
-function canonical(expr){
-  expr = normalize(expr);
-  expr = expr.replace(/\|([^\|]+)\|/g,(m,p1)=>{
-    let letters = p1.replace(/[^a-zA-Z]/g,'').split('').sort();
-    return '|' + letters.join('') + '|';
-  });
-  if(expr.includes('+')) return expr.split('+').map(s=>s.trim()).sort().join('+');
-  return expr;
+function normalize(s){
+ return (s||"").replace(/\s+/g,"").trim();
 }
 
 function grade(){
-  let score=0;
-  let total=0;
+ let score=0,total=0;
 
-  for(const id in answers){
-    total += answers[id].points;
+ for(const id in answers){
+  total+=answers[id].points;
 
-    if(id==="q1_5"){
-      const min = normalize(q1_5_min.value);
-      const max = normalize(q1_5_max.value);
-      r1_5.textContent = (min===answers[id].value[0] && max===answers[id].value[1]) ? (score+=5,"○") : "×";
-      continue;
-    }
-
-    if(id==="q4"){
-      const max = normalize(q4_max.value);
-      const min = normalize(q4_min.value);
-      r4.textContent = (max===answers[id].value[0] && min===answers[id].value[1]) ? (score+=15,"○") : "×";
-      continue;
-    }
-
-    const input = document.getElementById(id).value;
-    const result = document.getElementById("r"+id.slice(1));
-
-    if(canonical(input) === canonical(answers[id].value)){
-      result.textContent="○";
-      score += answers[id].points;
-    } else result.textContent="×";
+  if(id==="q1_5"){
+    const min=normalize(q1_5_min.value);
+    const max=normalize(q1_5_max.value);
+    if(min===answers[id].value[0]&&max===answers[id].value[1]){
+      r1_5.textContent="○"; score+=5;
+    }else r1_5.textContent="×";
+    continue;
   }
 
-  score.textContent;
-  document.getElementById("score").textContent = `得点：${score} / ${total}`;
-  sendToSheet(score,total);
+  if(id==="q4"){
+    const max=normalize(q4_max.value);
+    const min=normalize(q4_min.value);
+    if(max===answers[id].value[0]&&min===answers[id].value[1]){
+      r4.textContent="○"; score+=15;
+    }else r4.textContent="×";
+    continue;
+  }
+ }
+
+ document.getElementById("score").textContent=`得点：${score} / ${total}`;
+ sendToSheet(score,total);
 }
 
 function sendToSheet(score,total){
-  const data={
-    name:studentName.value,
-    comment:comment.value,
-    timestamp:new Date().toLocaleString(),
-    score,total
-  };
-  fetch(GAS_URL,{method:"POST",mode:"no-cors",body:JSON.stringify(data)});
+ const data={
+  name:document.getElementById("studentName").value,
+  timestamp:new Date().toLocaleString(),
+  score:score,
+  total:total
+ };
+
+ fetch(GAS_URL,{
+  method:"POST",
+  headers:{"Content-Type":"application/json"},
+  body:JSON.stringify(data)
+ });
 }
 </script>
+
 </body>
 </html>
